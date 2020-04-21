@@ -14,8 +14,10 @@ class World(commands.Cog):
         # Game vars
         self.world = None       # 25x25 world map
 
+
     def help(self):
         return "WORLD HELP MENU"
+
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -71,7 +73,7 @@ class World(commands.Cog):
             embed = discord.Embed(description=pstr, color=0x00ffff)
             await ctx.send(embed=embed)
             if qstr is not None:
-                await ctx.send(qstr)	
+                await ctx.send(qstr)
         else:
             await ctx.send("You don't have access to the hidden world yet.")
 
@@ -129,4 +131,3 @@ class World(commands.Cog):
 
 def setup(client):
     client.add_cog(World(client))
-

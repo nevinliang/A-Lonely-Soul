@@ -5,20 +5,19 @@ class Inv:
 
     ITEMS = ['map', \
 
-            'coins', \
-
             'woodenchest', 'ironchest', 'goldchest', 'diamondchest', 'firechest', \
 
             'driftwood', 'granite', 'hardwood', 'polishedgranite', 'cloth', 'leather', \
             'water', 'spring', 'pen', 'meat', 'pebbles', 'plastic', 'paper', \
 
             'glass', 'obsidian', 'gold', 'iron', 'steel', 'diamond', 'fire', 'ice'\
-            
+
             'woodensword', 'ironsword', 'steelsword', 'goldenhilt', 'diamondsword', 'flamesword']
 
 
     def __init__(self):
         self.list = {}
+        self.coins = 0
 
 
     def print(self):
@@ -28,7 +27,7 @@ class Inv:
     			retstr += item + ':' + str(self.list[item]) + '\n'
     	return retstr
 
-    
+
     def add_inv(self, obj, amt=1):
         if obj not in Inv.ITEMS:
             return False
@@ -53,19 +52,19 @@ class Inv:
     def open_chest(self, chest):
         if self.del_inv(chest):
             if chest == 'woodenchest':
-                self.add_inv('coins', 400)
+                self.coins += 400
                 self.add_inv('driftwood', randint(2, 5))
                 self.add_inv('hardwood', randint(1, 2))
                 return 'You have received some coins, some driftwood, and some hardwood'
             elif chest == 'ironchest':
-                self.add_inv('coins', 1000)
+                self.coins += 1000
                 self.add_inv('granite', randint(1, 3))
                 self.add_inv('iron', randint(1, 5))
                 self.add_inv('pebbles', (10, 20))
                 return 'You have received some coins, some driftwood, some iron, and some pebbles'
         else:
             return 'That is either not a real chest or you dont have that.'
-            
+
 
     def mix(self, objs):
         things = {}
@@ -91,4 +90,3 @@ class Inv:
 
         # not a valid recipe
         return None
-
