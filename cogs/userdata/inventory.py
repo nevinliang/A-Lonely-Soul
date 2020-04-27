@@ -94,8 +94,8 @@ class Inv:
 
         if check('driftwood', 'granite') and things['driftwood'] == 3 and things['granite'] == 1:
             return self.mix_help('driftwood', 3, 'granite', 1, 'woodensword', 1)
-        elif check('paper', 'pen') and things['paper'] == 2 and things['pen'] == 1:
-            return self.mix_help('paper', 2, 'pen', 1, 'map', 1)
+        elif check('paper', 'pen') and things['paper'] == 1 and things['pen'] == 1:
+            return self.mix_help('paper', 1, 'pen', 1, 'map', 1)
         elif check('driftwood', 'pebbles') and things['driftwood'] == 2 and things['pebbles'] == 5:
             return self.mix_help('driftwood', 2, 'pebbles', 5, 'hardwood', 1)
 

@@ -7,8 +7,23 @@ class Moderation(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    def help(self):
-        return "MODERATION HELP MENU"
+    def help(self, command):
+        if command is None:
+            embed = discord.Embed(title="MODERATION COMMANDS")
+            embed.description = "`ping`, `purge`, `clear`, `kick`, `ban`, `unban`"
+        else:
+            embed = discord.Embed(title=command)
+            if command == 'ping':
+                embed.description = '`reap ping`: gets the ping time to the bot'
+            elif command == 'purge' or command == 'clear':
+                embed.description = '`reap purge/clear [<amount>=5]`: purges a number of messages from the channel'
+            elif command == 'kick':
+                embed.description = '`reap kick <user>`: kicks user from the server'
+            elif command == 'ban':
+                embed.description = '`reap ban <user>`: bans user from the server'
+            elif command == 'unban':
+                embed.description = '`reap unban <user>: unbans them from the server'
+        return embed
 
     @commands.Cog.listener()
     async def on_ready(self):

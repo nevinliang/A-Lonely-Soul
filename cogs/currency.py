@@ -1,11 +1,12 @@
-from random import randint
+from datetime import datetime
 from random import choice
+from random import randint
 
 import discord
+from discord.ext import commands
+
 from .userdata.resources.files import Files
 from .userdata.user import User
-from discord.ext import commands
-from datetime import datetime
 
 
 class Currency(commands.Cog):
@@ -13,8 +14,23 @@ class Currency(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    def help(self):
-        return "CURRENCY HELP MENU"
+    def help(self, command):
+        if command is None:
+            embed = discord.Embed(title="CURRENCY COMMANDS")
+            embed.description = "`use`, `inv`, `coins`, `money`, `work`, `search`"
+        else:
+            embed = discord.Embed(title=command)
+            if command == 'use':
+                embed.description = '`reap use <item>`: use an item that you have'
+            elif command == 'inv':
+                embed.description = '`reap inv`: shows your inventory'
+            elif command == 'coins' or command == 'money':
+                embed.description = '`reap coins/money [<user>]`: gets the amount of coins you or someone has'
+            elif command == 'work':
+                embed.description = '`reap work`: work for some coins!'
+            elif command == 'search':
+                embed.description = '`reap search`: find some items/coins'
+        return embed
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -36,7 +52,7 @@ class Currency(commands.Cog):
     async def get_map(self, ctx):
         User.USER_LIST[ctx.author.id].add_inv('map')
 
-    @commands.command()
+    @commands.command(aliases=['money'])
     async def coins(self, ctx, other=None):
         if other is None:
             coins = User.USER_LIST[ctx.author.id].inv.coins
@@ -99,16 +115,16 @@ class Currency(commands.Cog):
         else:
             last_time = datetime.strptime(User.USER_LIST[ctx.author.id].wait['search'], '%Y-%m-%d/%H:%M:%S')
             diff = (now_time - last_time).total_seconds()
-            ok = diff >= 1
+            ok = diff >= 10
 
         if ok:
             User.USER_LIST[ctx.author.id].wait['search'] = str(now_time.strftime("%Y-%m-%d/%H:%M:%S"))
             rint = randint(1, 12)
-            if rint < 4:
+            if rint < 3:
                 msg = 'Rip. You didnt find anything.'
             else:
                 searchable_items = ['pen', 'cloth', 'woodenchest', 'paper']
-                if rint < 10:
+                if rint < 9:
                     amt = randint(40, 60)
                     item = str(amt) + ' coins'
                     User.USER_LIST[ctx.author.id].inv.coins += amt
@@ -122,7 +138,7 @@ class Currency(commands.Cog):
 
         else:
             msg = "You have to wait a little before searching again.\n" + \
-                  str(int(25 - diff)) + " seconds until you can search again"
+                  str(int(10 - diff)) + " seconds until you can search again"
             await ctx.send(msg)
 
 
